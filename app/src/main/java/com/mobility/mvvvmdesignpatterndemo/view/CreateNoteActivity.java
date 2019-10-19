@@ -2,6 +2,7 @@ package com.mobility.mvvvmdesignpatterndemo.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -30,7 +31,7 @@ public class CreateNoteActivity extends AppCompatActivity {
                 Intent intent=new Intent(CreateNoteActivity.this,MainActivity.class);
                 intent.putExtra("title",titleEditText.getText().toString());
                 intent.putExtra("description",descEditText.getText().toString());
-                setResult(1,intent);
+                setResult(Activity.RESULT_OK,intent);
                 finish();
             }
         });
