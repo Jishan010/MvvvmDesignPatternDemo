@@ -2,7 +2,6 @@ package com.mobility.mvvvmdesignpatterndemo.view;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.Nullable;
@@ -10,7 +9,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -20,8 +18,10 @@ import com.mobility.mvvvmdesignpatterndemo.adapters.NoteListAdapter;
 import com.mobility.mvvvmdesignpatterndemo.model.Note;
 import com.mobility.mvvvmdesignpatterndemo.viewmodel.NoteViewModel;
 
-import java.util.ArrayList;
 import java.util.List;
+
+import static com.mobility.mvvvmdesignpatterndemo.Utility.DESCRIPTION;
+import static com.mobility.mvvvmdesignpatterndemo.Utility.TITLE;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -49,10 +49,6 @@ public class MainActivity extends AppCompatActivity {
             public void onChanged(List<Note> notes) {
                 notesList=notes;
                 noteListAdapter.setNotes(notesList);
-                for(Note note : notes)
-                {
-                    Log.d(TAG, "onChanged: "+note.getTitle());
-                }
             }
         });
 
@@ -73,8 +69,8 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1 && resultCode == RESULT_OK) {
             if (data != null) {
-                String title = data.getStringExtra("title");
-                String description = data.getStringExtra("description");
+                String title = data.getStringExtra(TITLE);
+                String description = data.getStringExtra(DESCRIPTION);
                 Note note = new Note(title, description);
                 noteViewModel.insertNote(note);
             }
