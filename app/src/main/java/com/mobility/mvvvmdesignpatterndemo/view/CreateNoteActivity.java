@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toolbar;
 
 import com.mobility.mvvvmdesignpatterndemo.R;
 
@@ -15,16 +16,19 @@ public class CreateNoteActivity extends AppCompatActivity {
 
 
     private EditText titleEditText, descEditText;
-    private Button saveNoteButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setTitle("Create Note");
+        setActionBar(toolbar);
+
         setContentView(R.layout.activity_create_note);
         titleEditText=findViewById(R.id.titleEditText);
         descEditText=findViewById(R.id.descEditText);
 
-        saveNoteButton=findViewById(R.id.saveNoteButton);
+        Button saveNoteButton = findViewById(R.id.saveNoteButton);
         saveNoteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

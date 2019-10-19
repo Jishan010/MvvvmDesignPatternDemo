@@ -45,4 +45,8 @@ public class Note {
     public int getNoteId() {
         return noteId;
     }
+
+    public void setNoteId(int noteId) {
+        this.noteId = noteId;
+    }
 }
