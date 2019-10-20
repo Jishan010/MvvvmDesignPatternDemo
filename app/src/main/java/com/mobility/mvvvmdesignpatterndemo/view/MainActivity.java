@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onChanged(List<Note> notes) {
                 notesList = notes;
-                noteListAdapter.setNotes(notesList);
+                noteListAdapter.submitList(notesList);
             }
         });
 

@@ -1,28 +1,48 @@
 package com.mobility.mvvvmdesignpatterndemo.adapters;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.DiffUtil;
+import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.mobility.mvvvmdesignpatterndemo.R;
 import com.mobility.mvvvmdesignpatterndemo.model.Note;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Created By J7202687 On 10/19/2019
  */
 
-public class NoteListAdapter extends RecyclerView.Adapter<NoteListAdapter.MyNoteViewHolder> {
 
-    private List<Note> notes = new ArrayList<>();
-    OnItemClickListener onItemClickListener;
+/**
+ * here we're using listAdapter abstract class which is base class of recyclerView
+ * to make use of awesome api diffutil which enables add and remove animation on list item notify data set change
+ * */
+public class NoteListAdapter extends ListAdapter<Note, NoteListAdapter.MyNoteViewHolder> {
+
+//    private List<Note> notes = new ArrayList<>();
+    private OnItemClickListener onItemClickListener;
+
+    public NoteListAdapter() {
+        super(diffCallback);
+    }
+
+    private static final DiffUtil.ItemCallback<Note> diffCallback = new DiffUtil.ItemCallback<Note>() {
+        @Override
+        public boolean areItemsTheSame(@NonNull Note oldItem, @NonNull Note newItem) {
+            return oldItem.getNoteId() == newItem.getNoteId();
+        }
+
+        @Override
+        public boolean areContentsTheSame(@NonNull Note oldItem, @NonNull Note newItem) {
+            return oldItem.getTitle().equals(newItem.getTitle()) &&
+                    oldItem.getDescription().equals(newItem.getDescription());
+        }
+    };
 
     @NonNull
     @Override
@@ -34,22 +54,32 @@ public class NoteListAdapter extends RecyclerView.Adapter<NoteListAdapter.MyNote
 
     @Override
     public void onBindViewHolder(@NonNull MyNoteViewHolder holder, int position) {
-        Note note = notes.get(position);
+        Note note = getItem(position);
         holder.onBind(note);
     }
 
-    @Override
+
+    /**
+     We don't need getItemCount method  while using listadapter of recycler view
+     */
+
+ /*   @Override
     public int getItemCount() {
         return notes.size();
     }
+    */
 
+    /**
+     We don't need setNotes method  while using listadapter of recycler view ..instead we can use $submitList()
+     */
+ /*
     public void setNotes(List<Note> notes) {
         this.notes = notes;
         notifyDataSetChanged();
-    }
+    }*/
 
     public Note getNotes(int position) {
-        Note note = notes.get(position);
+        Note note = getItem(position);
         return note;
     }
 
