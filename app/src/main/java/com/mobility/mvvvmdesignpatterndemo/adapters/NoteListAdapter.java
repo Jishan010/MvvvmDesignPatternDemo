@@ -22,6 +22,7 @@ import java.util.List;
 public class NoteListAdapter extends RecyclerView.Adapter<NoteListAdapter.MyNoteViewHolder> {
 
     private List<Note> notes = new ArrayList<>();
+    OnItemClickListener onItemClickListener;
 
     @NonNull
     @Override
@@ -47,6 +48,12 @@ public class NoteListAdapter extends RecyclerView.Adapter<NoteListAdapter.MyNote
         notifyDataSetChanged();
     }
 
+    public Note getNotes(int position) {
+        Note note = notes.get(position);
+        return note;
+    }
+
+
     public class MyNoteViewHolder extends RecyclerView.ViewHolder {
 
         private TextView titleTextView, descTextView;
@@ -55,14 +62,27 @@ public class NoteListAdapter extends RecyclerView.Adapter<NoteListAdapter.MyNote
             super(itemView);
             titleTextView = itemView.findViewById(R.id.titleTextView);
             descTextView = itemView.findViewById(R.id.descTextView);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    onItemClickListener.updateNote(getNotes(getAdapterPosition()));
+                }
+            });
         }
 
         public void onBind(Note note) {
             titleTextView.setText(note.getTitle());
             descTextView.setText(note.getDescription());
         }
+    }
 
+    public interface OnItemClickListener {
+        void updateNote(Note note);
+    }
 
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
     }
 
 }

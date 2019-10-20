@@ -9,5 +9,6 @@ import com.mobility.mvvvmdesignpatterndemo.view.MainActivity;
 public class Utility {
     public static final String TITLE ="title";
     public static final String DESCRIPTION ="description";
+    public static final String ID ="id";
 
 }

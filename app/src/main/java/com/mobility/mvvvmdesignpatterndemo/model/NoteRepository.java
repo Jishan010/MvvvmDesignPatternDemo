@@ -32,14 +32,15 @@ public class NoteRepository {
     }
 
     public void updateNote(Note note) {
-        noteDao.updateNote(note);
+        new updateAsyncTask().execute(note);
     }
 
     public void deleteNote(Note note) {
-        noteDao.deleteNote(note);
+        new deleteAsyncTask().execute(note);
     }
 
 
+    //async task for inserting notes
     public static class insertAsyncTask extends AsyncTask<Note, Void, Void> {
         @Override
         protected Void doInBackground(Note... notes) {
@@ -48,5 +49,22 @@ public class NoteRepository {
         }
     }
 
+    //async task for deleting notes
+    public static class deleteAsyncTask extends AsyncTask<Note, Void, Void> {
+        @Override
+        protected Void doInBackground(Note... notes) {
+            noteDao.deleteNote(notes[0]);
+            return null;
+        }
+    }
+
+    //async task for updating notes
+    public static class updateAsyncTask extends AsyncTask<Note, Void, Void> {
+        @Override
+        protected Void doInBackground(Note... notes) {
+            noteDao.updateNote(notes[0]);
+            return null;
+        }
+    }
 
 }
